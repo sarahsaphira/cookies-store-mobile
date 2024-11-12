@@ -1,3 +1,129 @@
+# TUGAS INDIVIDU 8
+1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+
+- Kegunaan const di Flutter
+  Di Flutter, const biasanya digunakan untuk membuat objek atau widget yang tidak akan berubah sepanjang waktu aplikasi berjalan. Dengan menandai objek atau widget sebagai const, kita memberi tahu Dart bahwa objek tersebut bisa diinisialisasi pada waktu kompilasi dan tidak perlu diinisialisasi ulang saat aplikasi dijalankan. Ini sangat berguna untuk optimasi performa, terutama saat bekerja dengan banyak widget statis.
+
+- Keuntungan Menggunakan const
+  - Optimasi Memori
+  Objek const hanya diinisialisasi sekali di memori dan akan digunakan ulang di berbagai tempat di mana objek tersebut muncul. Ini menghemat penggunaan memori karena menghindari pembuatan objek baru setiap kali widget tersebut dipanggil.
+  - Peningkatan Performa
+  Karena objek const sudah diinisialisasi pada waktu kompilasi, Flutter tidak perlu membuat ulang objek tersebut saat melakukan rendering ulang. Ini mengurangi jumlah rebuild dan mempercepat rendering UI, terutama pada aplikasi yang memiliki banyak elemen statis.
+  - Keamanan Data 
+  Dengan const, kita menjamin bahwa data tersebut tidak akan berubah selama aplikasi berjalan. Ini membantu menjaga konsistensi data dalam aplikasi, karena objek yang bersifat const tidak dapat dimodifikasi setelah dibuat.
+  - Penggunaan Cache yang Efisien
+  Objek const bisa dimanfaatkan dalam cache rendering, yang artinya Flutter dapat menyimpan hasil rendering widget dan menggunakannya kembali tanpa harus melakukan rendering ulang.
+
+- Kapan Sebaiknya Menggunakan const
+  - Widget Statis
+  Jika widget atau elemen UI tidak akan berubah sepanjang waktu aplikasi berjalan, Anda bisa menggunakan const. Contoh: Text("Hello World"), Icon(Icons.add), dan sebagainya.
+  - Variabel Global 
+  Untuk data yang bersifat tetap dan perlu diakses di beberapa bagian aplikasi, misalnya URL, string, atau angka tetap.
+  - Konfigurasi atau Konstanta
+  Pada konfigurasi atau nilai tetap, seperti padding, margin, dan durasi animasi yang tidak akan berubah.
+  - List atau Map
+  Pada list atau map yang nilainya tidak akan diubah setelah diinisialisasi, seperti const [1, 2, 3].
+
+- Kapan Tidak Sebaiknya Menggunakan const
+  - Data yang Berubah-ubah
+  Jika data atau nilai objek akan berubah seiring waktu, seperti nilai input pengguna atau data dari server, tidak cocok menggunakan const.
+  - Widget atau Variabel yang Tergantung pada State 
+  Untuk widget yang bergantung pada variabel yang bisa berubah dalam aplikasi (misalnya, dari StatefulWidget atau provider), hindari penggunaan const.
+  - Komponen yang Dikustomisasi Dinamis
+  Misalnya widget yang bergantung pada kondisi atau state tertentu, atau elemen yang perlu diupdate ulang saat state berubah.
+
+2. Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+
+- Penggunaan Column
+  Column adalah widget yang menata anak-anaknya dalam arah vertikal, dari atas ke bawah. Biasanya digunakan untuk menyusun elemen UI secara berurutan dalam satu kolom.
+  - Properti Penting pada Column
+    - mainAxisAlignment
+    Mengatur posisi anak-anak widget di sepanjang main axis (sumbu utama), yaitu sumbu vertikal pada Column. Pilihan nilai seperti MainAxisAlignment.start, MainAxisAlignment.center, dan MainAxisAlignment.end.
+    - crossAxisAlignment
+    Mengatur posisi anak-anak widget di sepanjang cross axis (sumbu silang), yaitu sumbu horizontal pada Column. Pilihan nilai seperti CrossAxisAlignment.start, CrossAxisAlignment.center, dan CrossAxisAlignment.end.
+    - children
+    Digunakan untuk menentukan daftar widget yang akan ditata oleh Column.
+  - Contoh Implementasi Column
+    Berikut adalah contoh sederhana dari Column yang menyusun beberapa widget teks secara vertikal:
+    ```html
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Hello, World!"),
+        Text("Welcome to Flutter"),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text("Click Me"),
+        ),
+      ],
+    )
+    ```
+    Dalam contoh di atas:
+      - mainAxisAlignment diatur ke center, jadi semua elemen akan diatur di tengah sumbu vertikal.
+      - crossAxisAlignment diatur ke start, jadi semua elemen akan mulai dari kiri pada sumbu horizontal.
+
+- Penggunaan Row
+  Row adalah widget yang menata anak-anaknya dalam arah horizontal, dari kiri ke kanan. Biasanya digunakan untuk menyusun elemen UI secara horizontal dalam satu baris.
+  - Properti Penting pada Row
+    - mainAxisAlignment
+      Mengatur posisi anak-anak widget di sepanjang main axis (sumbu utama), yaitu sumbu horizontal pada Row.
+    - crossAxisAlignment
+      Mengatur posisi anak-anak widget di sepanjang cross axis (sumbu silang), yaitu sumbu vertikal pada Row.
+    - children
+      Digunakan untuk menentukan daftar widget yang akan ditata oleh Row.
+  - Contoh Implementasi Row
+      Berikut adalah contoh sederhana dari Row yang menyusun beberapa widget teks dan tombol secara horizontal:
+      ```html
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.home),
+          Text("Home"),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text("Click Me"),
+          ),
+        ],
+      )
+      ```
+      Dalam contoh di atas:
+      - mainAxisAlignment diatur ke spaceAround, jadi elemen-elemen di dalam Row akan diberi jarak merata di sepanjang sumbu horizontal.
+      - crossAxisAlignment diatur ke center, jadi elemen-elemen akan diatur di tengah sumbu vertikal.
+    
+- Kapan Menggunakan Column dan Row
+  - Gunakan Column saat ingin membuat tata letak vertikal seperti daftar, formulir, atau sekumpulan teks dan tombol yang diletakkan dari atas ke bawah.
+  - Gunakan Row saat ingin membuat tata letak horizontal, misalnya ikon dan teks pada satu baris, atau tombol-tombol tindakan yang diletakkan berdampingan.
+
+3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+
+Elemen Input yang Digunakan di Halaman Form: 
+- TextFormField untuk memasukkan Name (nama item).
+- TextFormField untuk memasukkan Amount (jumlah item), yang diformat agar hanya menerima angka.
+- TextFormField untuk memasukkan Description (deskripsi item).
+
+Elemen Input Lain di Flutter yang Tidak Digunakan:
+- DropdownButton: Elemen input ini digunakan untuk membuat dropdown list (daftar pilihan).
+- Checkbox: Elemen input untuk memilih opsi dengan mencentang kotak.
+- Radio: Elemen input untuk memilih salah satu dari beberapa opsi yang tersedia.
+- Switch: Elemen input yang berfungsi sebagai toggle switch untuk pilihan "aktif" atau "tidak aktif".
+- Slider: Elemen input untuk memilih nilai dalam rentang tertentu (misalnya volume suara).
+- DatePicker atau TimePicker: Elemen ini memungkinkan pengguna memilih tanggal atau waktu.
+
+Saya tidak menggunakan elemen-elemen ini karena form saya cukup sederhana dan hanya membutuhkan input teks serta angka saja. Jika ada pilihan atau opsi lebih lanjut, dropdown, checkbox, atau radio bisa ditambahkan untuk meningkatkan pengalaman pengguna.
+
+4. Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+
+Untuk menjaga konsistensi tema di seluruh aplikasi, saya mengatur tema dengan ThemeData pada widget MaterialApp di file main.dart. Tema ini memungkinkan saya untuk mengatur warna utama (primaryColor), warna aksen (accentColor), gaya teks, dan elemen lain seperti bentuk tombol (ButtonStyle). Dengan cara ini, seluruh widget di aplikasi mengikuti tema yang sama, menjadikannya terlihat lebih rapi dan konsisten.
+
+Saya menerapkan tema di aplikasi ini dengan menggunakan ThemeData. Misalnya, warna utama diatur di colorScheme.primary, dan semua elemen seperti tombol dan teks yang menggunakan Theme.of(context).colorScheme.primary akan menampilkan warna yang sama, sehingga tampilan aplikasi menjadi lebih seragam.
+
+5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+
+Dalam Flutter, navigasi diatur menggunakan Navigator dan Route. Saya menggunakan metode Navigator.push untuk berpindah dari satu halaman ke halaman lain. Misalnya, dari halaman utama ke halaman form penambahan item.
+Jika aplikasi memiliki lebih banyak halaman, saya bisa mempertimbangkan penggunaan Navigator.pushNamed dan mendefinisikan semua halaman di routes dalam MaterialApp. Ini akan membuat pengelolaan rute lebih mudah dan konsisten. Untuk navigasi yang sering digunakan, saya juga bisa menggunakan Drawer atau BottomNavigationBar sebagai menu navigasi tetap di bagian bawah atau sisi aplikasi.
+
 # TUGAS INDIVIDU 7
 1. Jelaskan apa yang dimaksud dengan stateless widget dan stateful widget, dan jelaskan perbedaan dari keduanya.
 
@@ -98,14 +224,14 @@ class ItemHomepage {
     ItemHomepage(this.name, this.icon);
 }
 ```
-- Melihat daftar produk dengan menambahkan ItemHomepage("Lihat Daftar Produk", Icons.store), sebagai tombol Lihat Item pada final List items
-- Menambah produk dengan menambahkan ItemHomepage("Tambah Produk", Icons.add), sebagai tombol Tambah Item pada final List items
+- Melihat daftar item dengan menambahkan ItemHomepage("Lihat Daftar Item", Icons.store), sebagai tombol Lihat Item pada final List items
+- Menambah item dengan menambahkan ItemHomepage("Tambah Item", Icons.add), sebagai tombol Tambah Item pada final List items
 - Logout dengan menambahkan ItemHomepage("Logout", Icons.logout), sebagai tombol Logout pada final List items
 - Sehingga, pada akhirnya menjadi:
 ```html
 final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Daftar Produk", Icons.store),
-    ItemHomepage("Tambah Produk", Icons.add),
+    ItemHomepage("Lihat Daftar Item", Icons.store),
+    ItemHomepage("Tambah Item", Icons.add),
     ItemHomepage("Logout", Icons.logout),
   ];
 ```
