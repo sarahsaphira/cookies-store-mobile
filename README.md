@@ -1,3 +1,85 @@
+# TUGAS INDIVIDU 9
+1. Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+
+Technically bisa-bisa saja. Akan tetapi, tidak lebih baik dibandingkan membuat model sebelum melakukan pengambilan data JSON. Jika kita membuat model dulu, akan lebih terstruktur karena object oriented. Kode juga akan menjadi lebih mudah untuk diperbaiki jika terdapat error. Tak hanya itu, dengan memanfaakan model. kita juga bisa memastikan tipe data untuk setiap atribut dari awal, sedangkan jika tanpa menggunakan model bisa saja terdapat kekeliruan saat memindah-mindahkan data. Selain itu, kita tahu bahwa class dapat memiliki atribut tersendiri, sehingga terenkapsulasi dan dapat kita gunakan berkali-kali method tersebut dengan mudah.
+
+2. Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+
+Library http di Flutter digunakan untuk berkomunikasi dengan server melalui protokol HTTP. Fungsi dari library ini antara lain:
+  - Mengirim Permintaan (Request): Library http memungkinkan aplikasi untuk mengirim berbagai jenis permintaan HTTP (GET, POST, PUT, DELETE, dll.) ke server. Misalnya, kita menggunakan metode http.get() untuk mengambil data atau http.post() untuk mengirim data ke server.
+
+  - Menerima Respons dari Server: Setelah permintaan dikirim, server akan memberikan respons yang dapat diambil menggunakan metode seperti http.Response. Respons ini biasanya berisi data yang dikembalikan dalam format JSON, status kode HTTP, dan informasi lainnya.
+
+  - Mempermudah Pengelolaan HTTP: Dengan library ini, kita bisa mengelola URL, headers, body, dan pengaturan lainnya dengan cara yang lebih mudah dan bersih, tanpa harus menulis kode raw HTTP.
+
+3. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+Fungsi CookieRequest adalah untuk handle cookies dan session suatu pengguna. Dengan demikian, CookieRequest dapat digunakan untuk mengelola autentikasi dan otorisasi pengguna. CookieRequest perlu dibagikan ke semua komponen di aplikasi Flutter untuk memastikan cookies dan session selalu konsisten pada setiap aplikasi Flutter. Jika tidak dibagikan, bisa saja terdapat kontradiksi (misal: sesi pengguna dianggap telah berakhir di aplikasi A, tetapi masih valid di aplikasi B). Maka dari itu, jika terdapat perubahan pada suatu komponen atau aplikasi, maka di komponen atau aplikasi perlu diubah juga untuk memastikan sesuai.
+
+4. Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+
+- Input Data Pengguna
+Pengguna mengisi form atau memilih data di aplikasi Flutter (misalnya, input username dan password).
+- Pengolahan Data di Flutter
+Setelah pengguna mengirimkan data, data akan diproses di sisi aplikasi Flutter. Data ini kemudian dikemas ke dalam format yang sesuai (misalnya JSON) dan dikirim ke server menggunakan permintaan HTTP (misalnya http.post()).
+- Pengiriman ke Server
+Data dikirim melalui HTTP request ke server yang sesuai (misalnya ke Django atau backend lainnya).
+- Respons dari Server
+Server akan memproses permintaan tersebut dan mengirimkan respons kembali, biasanya dalam format JSON yang berisi data yang diminta atau status dari permintaan.
+- Menampilkan Data di Flutter
+Setelah Flutter menerima respons dari server, data tersebut dapat diparsing (misalnya menggunakan json.decode()) dan digunakan untuk memperbarui UI dengan data yang sesuai.
+
+5. Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+Login:
+  - Pengguna membuka halaman login (LoginPage) di aplikasi Flutter dan memasukkan username dan password.
+  - Aplikasi Flutter mengirimkan permintaan HTTP ke server (misalnya Django) untuk memverifikasi kredensial.
+  - Jika kredensial valid, server mengembalikan token autentikasi atau cookie sesi yang digunakan untuk menandai status login pengguna.
+  - Aplikasi menyimpan cookie atau token tersebut dan mengarahkan pengguna ke halaman utama (HomePage).
+
+Register:
+  - Pengguna mengisi form registrasi dengan informasi akun baru.
+  - Aplikasi Flutter mengirimkan data ke server untuk membuat akun baru.
+  - Setelah akun berhasil dibuat, server memberikan respons yang menandakan keberhasilan dan bisa langsung mengarahkan pengguna untuk login.
+
+Logout:
+  - Pengguna memilih untuk logout.
+  - Aplikasi mengirimkan permintaan ke server untuk menghapus sesi atau token autentikasi.
+  - Server menghapus sesi dan mengirimkan respons sukses.
+  - Aplikasi Flutter menghapus data sesi atau cookie lokal dan mengarahkan pengguna kembali ke halaman login.
+
+6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+
+- Membuat halaman login pada proyek tugas Flutter.
+  - Membuat file baru login.dart.
+  - Menjadikan halaman login sebagai halaman yang pertama muncul (diubah pada main.dart).
+
+- Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+  - Install django-cors-headers pada Django project.
+  - Membuat app baru authentication pada Django project.
+  - Menambahkan urls.py dan views.py pada app authentication untuk diintegrasikan dengan Flutter.
+  - Saat mengakses data, mengakses dari url yang telah tersedia pada urls.py di Django project akan tersinkronisasi.
+
+- Membuat model kustom sesuai dengan proyek aplikasi Django.
+  - Membuat file item.dart yang akan menyimpan model kustom Item.
+  - Memanfaatkan QuickType untuk mengisi file item_entry.dart.
+
+- Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy.
+  - Tampilkan name, price, dan description dari masing-masing item pada halaman ini.
+  - Memanfaatkan AsyncSnapshot snapshot untuk iterasi setiap item.
+  - Mengambil data semua item dari url Django project.
+
+- Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+  - Halaman ini dapat diakses dengan menekan salah satu item pada halaman daftar Item.
+  - Membuat ElevatedButton dengan teks See Details yang akan redirect ke detail page dari item yang bersangkutan.
+  - Halaman ini terdapat pada file ItemDetailPage.dart.
+
+- Tampilkan seluruh atribut pada model item kamu pada halaman ini.
+  - Memanfaatkan model Item, atribut dapat diakses dengan item.fields.<attribute>
+
+- Tambahkan tombol untuk kembali ke halaman daftar item.
+  - Membuat ElevatedButton dengan teks Back untuk kembali ke page list item (memanfaatkan Navigator.pop(context)).
+
 # TUGAS INDIVIDU 8
 1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
 
@@ -100,7 +182,7 @@
 
 Elemen Input yang Digunakan di Halaman Form: 
 - TextFormField untuk memasukkan Name (nama item).
-- TextFormField untuk memasukkan Amount (jumlah item), yang diformat agar hanya menerima angka.
+- TextFormField untuk memasukkan Price (harga item), yang diformat agar hanya menerima angka.
 - TextFormField untuk memasukkan Description (deskripsi item).
 
 Elemen Input Lain di Flutter yang Tidak Digunakan:

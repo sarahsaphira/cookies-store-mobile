@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cookies_store/widgets/left_drawer.dart';
 import 'package:cookies_store/widgets/item_card.dart';
 
-
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
   final String npm = '2306240093'; // NPM
